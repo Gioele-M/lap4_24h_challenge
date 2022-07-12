@@ -1,171 +1,46 @@
-from operator import truediv
-import sqlite3
+from db import add_link, delete_link, get_long_link, get_links_by_ip, check_short_exists, check_number_clicks, add_clicked_to_link
+
+from flask import Flask, request
+from flask_cors import CORS
+import random, string
 
 
-conn = sqlite3.connect('database.db')
+app = Flask(__name__)
+
+CORS(app)
 
 
-print('opened db')
-
-
-# conn.execute('CREATE TABLE links (long TEXT, short TEXT, ip TEXT, clicks INT)')
-
-# conn.execute('DROP TABLE links')
-
-long, short, ip, clicks = 'long', 'short', 'ipaddress', 0
-
-# conn.execute('INSERT INTO links (long, short, ip, clicks) VALUES (?, ?, ?, ?)', (long, short, ip, clicks))
-
-
-
-def add_link(long, short, ip, clicks):
-    try:
-        cur = conn.cursor()
-        cur.execute('INSERT INTO links (long, short, ip, clicks) VALUES (?, ?, ?, ?);', (long, short, ip, clicks))
-        conn.commit()
-        return True
-    except:
-        conn.rollback()
-        raise Exception('Error in insert operation')
-
-
-def get_all_links():
-    try:
-        cur = conn.cursor()
-        cur.execute('SELECT * FROM links;')
-        rows = cur.fetchall()
-        return rows
-    except:
-        conn.rollback()
-        raise Exception('Error in getting all links')
-
-
-def delete_all_links():
-    try:
-        cur = conn.cursor()
-        cur.execute('DELETE FROM links;')
-        conn.commit()
-        return True
-    except:
-        conn.rollback()
-        raise Exception('Error in deleting all users')
-
-
-def get_long_link(short):
-    try:
-        cur = conn.cursor()
-        cur.execute(f'SELECT * FROM links WHERE short = "{short}";')
-        rows = cur.fetchall()
-        return rows[0]
-    except:
-        conn.rollback()
-        raise Exception(f'Error in getting link for {short}')
+def generate_short_url():
+    viable_chars = string.ascii_letters + string.digits
+    result = ''
+    for _ in range(5):
+        result += random.choice(viable_chars)
+    exists = check_short_exists(result)
+    if not exists:
+        return result
+    else:
+        return generate_short_url()
 
 
 
-
-# Delete single link
-def delete_link(short):
-    try:
-        cur = conn.cursor()
-        cur.execute(f'DELETE FROM links WHERE short = "{short}"')
-        conn.commit()
-        return True
-    except:
-        conn.rollback()
-        raise Exception(f'Error in deleting link for {short}')
-
-
-
-
-# Get links by ip
-def get_links_by_ip(ip):
-    try:
-        cur = conn.cursor()
-        cur.execute(f'SELECT * FROM links WHERE ip = "{ip}"')
-        rows = cur.fetchall()
-        return rows
-    except:
-        conn.rollback()
-        raise Exception(f'Error in getting links for ip {ip}')
+@app.route('/', methods=['GET', 'POST'])
+def home_route():
+    if request.method == 'GET':
+        # return render template home
+        # use get_links_by_ip to see if anything has to be displayed
+        return 'Home directory', 200
+    if request.method == 'POST':
+        #get long link from page form
+        long = 'Temporary long'
+        #generate short link
+        short = generate_short_url()
+        #Get user ip
+        ip_addr = request.remote_addr
+        #Initialise link
+        add_link(long, short, ip_addr, 0)
+        # Return rendered template same as in get
+        return 'Home directory', 204
 
 
+# Make route /<var> to redirect users+add click if get, delete if delete
 
-
-# Check if link exists already
-def check_short_exists(short):
-    try:
-        cur = conn.cursor()
-        cur.execute(f'SELECT * FROM links WHERE short = "{short}";')
-        rows = cur.fetchall()
-        if len(rows) == 0:
-            return False
-        else:
-            return True
-    except:
-        conn.rollback()
-        raise Exception(f'Error in asserting if short link exists {short}')
-
-
-
-
-# Get number of clicks
-def check_number_clicks(short):
-    try:
-        cur = conn.cursor()
-        cur.execute(f'SELECT clicks FROM links WHERE short = "{short}"')
-        rows = cur.fetchall()
-        return rows[0][0]
-    except:
-        conn.rollback()
-        raise Exception(f'Error in asserting number of clicks of {short}')
-
-
-
-
-
-# Patch number of clicks
-def add_clicked_to_link(short):
-    try:
-        current = check_number_clicks(short)
-        cur = conn.cursor()
-        cur.execute(f'UPDATE links SET clicks = {int(current)+1} WHERE short = "{short}"')
-        conn.commit()
-        return True
-    except:
-        conn.rollback()
-        raise Exception(f'Error in updating the number of clicks of {short}')
-    
-
-
-
-
-
-
-
-
-
-
-
-# delete_all_links()
-
-add_link('longest', 'shortest2', 'myip2', 1)
-
-print(get_all_links())
-
-print(check_number_clicks('shortest3'))
-
-add_clicked_to_link('shortest3')
-
-print(check_number_clicks('shortest3'))
-
-
-# delete_link('shortest3')
-
-# print(get_links_by_ip('myip2'))
-
-# print(get_all_links())
-
-# print(get_long_link('shortest2'))
-
-# print('dropped')
