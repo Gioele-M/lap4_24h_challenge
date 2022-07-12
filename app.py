@@ -93,18 +93,49 @@ def get_links_by_ip(ip):
 
 
 # Check if link exists already
-
+def check_short_exists(short):
+    try:
+        cur = conn.cursor()
+        cur.execute(f'SELECT * FROM links WHERE short = "{short}";')
+        rows = cur.fetchall()
+        if len(rows) == 0:
+            return False
+        else:
+            return True
+    except:
+        conn.rollback()
+        raise Exception(f'Error in asserting if short link exists {short}')
 
 
 
 
 # Get number of clicks
+def check_number_clicks(short):
+    try:
+        cur = conn.cursor()
+        cur.execute(f'SELECT clicks FROM links WHERE short = "{short}"')
+        rows = cur.fetchall()
+        return rows[0][0]
+    except:
+        conn.rollback()
+        raise Exception(f'Error in asserting number of clicks of {short}')
+
 
 
 
 
 # Patch number of clicks
-
+def add_clicked_to_link(short):
+    try:
+        current = check_number_clicks(short)
+        cur = conn.cursor()
+        cur.execute(f'UPDATE links SET clicks = {int(current)+1} WHERE short = "{short}"')
+        conn.commit()
+        return True
+    except:
+        conn.rollback()
+        raise Exception(f'Error in updating the number of clicks of {short}')
+    
 
 
 
@@ -118,9 +149,16 @@ def get_links_by_ip(ip):
 
 # delete_all_links()
 
-add_link('longest', 'shortest3', 'myip2', 2)
+add_link('longest', 'shortest2', 'myip2', 1)
 
 print(get_all_links())
+
+print(check_number_clicks('shortest3'))
+
+add_clicked_to_link('shortest3')
+
+print(check_number_clicks('shortest3'))
+
 
 # delete_link('shortest3')
 
