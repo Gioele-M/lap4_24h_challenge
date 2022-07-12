@@ -17,10 +17,10 @@ long, short, ip, clicks = 'long', 'short', 'ipaddress', 0
 
 
 
-def addLink(long, short, ip, clicks):
+def add_link(long, short, ip, clicks):
     try:
         cur = conn.cursor()
-        cur.execute('INSERT INTO links (long, short, ip, clicks) VALUES (?, ?, ?, ?)', (long, short, ip, clicks))
+        cur.execute('INSERT INTO links (long, short, ip, clicks) VALUES (?, ?, ?, ?);', (long, short, ip, clicks))
         conn.commit()
         return True
     except:
@@ -28,10 +28,10 @@ def addLink(long, short, ip, clicks):
         raise Exception('Error in insert operation')
 
 
-def getAllLinks():
+def get_all_links():
     try:
         cur = conn.cursor()
-        cur.execute('SELECT * FROM links')
+        cur.execute('SELECT * FROM links;')
         rows = cur.fetchall()
         return rows
     except:
@@ -39,10 +39,10 @@ def getAllLinks():
         raise Exception('Error in getting all links')
 
 
-def deleteAllLinks():
+def delete_all_links():
     try:
         cur = conn.cursor()
-        cur.execute('DELETE FROM links')
+        cur.execute('DELETE FROM links;')
         conn.commit()
         return True
     except:
@@ -50,11 +50,25 @@ def deleteAllLinks():
         raise Exception('Error in deleting all users')
 
 
+def get_long_link(short):
+    try:
+        cur = conn.cursor()
+        cur.execute(f'SELECT * FROM links WHERE short = "{short}";')
+        rows = cur.fetchall()
+        return rows
+    except:
+        conn.rollback()
+        raise Exception(f'Error in getting link for {short}')
 
 
-addLink('longest', 'shortest', 'myip', 4)
 
-# deleteAllLinks()
-print(getAllLinks())
+
+# delete_all_links()
+
+add_link('longest', 'shortest2', 'myip', 2)
+
+print(get_all_links())
+
+print(get_long_link('shortest2'))
 
 # print('dropped')
