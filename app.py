@@ -1,3 +1,4 @@
+from operator import truediv
 import sqlite3
 
 
@@ -55,7 +56,7 @@ def get_long_link(short):
         cur = conn.cursor()
         cur.execute(f'SELECT * FROM links WHERE short = "{short}";')
         rows = cur.fetchall()
-        return rows
+        return rows[0]
     except:
         conn.rollback()
         raise Exception(f'Error in getting link for {short}')
@@ -63,12 +64,70 @@ def get_long_link(short):
 
 
 
+# Delete single link
+def delete_link(short):
+    try:
+        cur = conn.cursor()
+        cur.execute(f'DELETE FROM links WHERE short = "{short}"')
+        conn.commit()
+        return True
+    except:
+        conn.rollback()
+        raise Exception(f'Error in deleting link for {short}')
+
+
+
+
+# Get links by ip
+def get_links_by_ip(ip):
+    try:
+        cur = conn.cursor()
+        cur.execute(f'SELECT * FROM links WHERE ip = "{ip}"')
+        rows = cur.fetchall()
+        return rows
+    except:
+        conn.rollback()
+        raise Exception(f'Error in getting links for ip {ip}')
+
+
+
+
+# Check if link exists already
+
+
+
+
+
+# Get number of clicks
+
+
+
+
+# Patch number of clicks
+
+
+
+
+
+
+
+
+
+
+
+
 # delete_all_links()
 
-add_link('longest', 'shortest2', 'myip', 2)
+add_link('longest', 'shortest3', 'myip2', 2)
 
 print(get_all_links())
 
-print(get_long_link('shortest2'))
+# delete_link('shortest3')
+
+# print(get_links_by_ip('myip2'))
+
+# print(get_all_links())
+
+# print(get_long_link('shortest2'))
 
 # print('dropped')
