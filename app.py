@@ -69,7 +69,7 @@ def redirect_and_delete(short):
         if to_redirect == False:
             return '404 page!', 404
         add_clicked_to_link(short)
-        return redirect(to_redirect), 200
+        return redirect(to_redirect)
     if request.method == 'DELETE':
         deleted = delete_link(short)
         return str(deleted), 204
