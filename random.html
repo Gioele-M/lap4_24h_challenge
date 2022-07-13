@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function generateQRCode(value){
+            fetch(`http://localhost:5000/generateQRCode/${value}`).then(
+                (res) => {
+                    res.body.getReader().read().then((img) => {
+                        let imageByteArray = img.value;
+                        let stringValue = String.fromCharCode(...imageByteArray);
+                        let encodedValue = btoa(stringValue);
+                        document.getElementById('qrcode').src= `data:image/png;base64,${encodedValue}`;
+                    })
+                }
+            )
+        }
+    </script>
+</head>
+<body>
+    <h1>QR generator</h1>
+    <div>
+        <label>Text:</label>
+        <input name="qrcode" type="text" onchange="generateQRCode(this.value)" />
+    </div>
+    <img id='qrcode'/>
+</body>
+</html>
