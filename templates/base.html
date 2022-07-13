@@ -20,6 +20,7 @@
         );
       }
     </style>
+    <!-- <script type="text/javascript" src="./index.js"></script> -->
   </head>
   <body>
     <section id="contact">
@@ -29,51 +30,38 @@
         </div>
         <div class="row justify-content-center my-5">
           <div class="col-lg-6">
-            <form>
-              <label for="url-input" class="form-label"></label>
+            <form action="" method="POST" >
+              <label for="input" class="form-label"></label>
               <input
                 type="text"
                 class="form-control"
-                id="url-input"
+                id="input"
+                name="input"
                 placeholder="input url here"
               />
             </form>
-            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            <input id="submitBtn" type="submit" class="btn btn-primary mt-3" value="Submit" />
           </div>
         </div>
       </div>
-      <section>
-        <div class="card m-5">
-          <div class="card-header text-center font-weight-bold text-uppercase">Results</div>
-          <div class="card-body">
-            <div>
-              <form>
-                <label for="url-input" class="form-label"></label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="url-input"
-                  placeholder="Long URL"
-                />
-                <label for="url-input" class="form-label"></label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="url-input"
-                  placeholder="Shortened URL"
-                />
-              </form>
-            </div>
+      
+        {% block content %}
+        {% endblock %}
 
-            <!-- <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
-            <a href="#" class="btn btn-primary mt-3">Copy URL</a>
-            <a href="#" class="btn btn-primary mt-3 ml-5">QR Code</a>
-            <a href="#" class="btn btn-primary mt-3">Delete</a>
-          </div>
-        </div>
-      </section>
+        <!-- {% for result in user_specific_links %}
+        <p>{{result}}</p>
+        {% endfor %} -->
+      
     </section>
- 
+    
+
+
+
+
+
+
+
+
+    
   </body>
 </html>

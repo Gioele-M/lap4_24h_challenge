@@ -1,6 +1,6 @@
 from db import add_link, delete_link, get_long_link, get_links_by_ip, check_short_exists, check_number_clicks, add_clicked_to_link
 
-from flask import Flask, request, send_file, redirect, jsonify
+from flask import Flask, request, send_file, redirect, jsonify, render_template
 from flask_cors import CORS
 import random, string
 import json
@@ -29,7 +29,6 @@ def generate_short_url():
 @app.route('/generateQRCode/<url>', methods=['GET'])
 def generate_qrcode(url):
     buffer = BytesIO()
-    data = request.form.get('data')
     img = qrcode.make(url)
     img.save(buffer)
     buffer.seek(0)
@@ -49,7 +48,7 @@ def home_route():
         status = 200
     if request.method == 'POST':
         #get long link from page form
-        long = request.get_json()
+        long = request.form['input']
         #generate short link
         short = generate_short_url()
         #Get user ip
@@ -58,7 +57,8 @@ def home_route():
         # Return rendered template same as in get
         status = 204
     user_specific_links = get_links_by_ip(ip_addr)
-    return jsonify(user_specific_links), status
+    return render_template('results.html', user_specific_links=user_specific_links)
+    # return jsonify(user_specific_links), status
 
 
 # Make route /<var> to redirect users+add click if get, delete if delete

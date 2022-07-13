@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card m-5">
+        
+
+
+        {% if user_specific_links.length == 0 %}
+        <div>Insert your first link!</div>
+        {% else %}
+
+        <section id="result-section">
+
+            <div class="card-header text-center font-weight-bold text-uppercase">Results</div>
+            {% for result in user_specific_links %}
+            <!-- <div>{{result}}</div> -->
+            
+            <div class="card-body">
+                <div>
+                    <div>
+                        <label for="url-input" class="form-label"></label>
+                        <div
+                        type="text"
+                        class="form-control"
+                        id="url-input"
+                        >{{result[0]}}</div>
+                        <label for="url-input" class="form-label"></label>
+                        <div
+                        type="text"
+                        class="form-control"
+                        id="url-input"
+                        >{{result[1]}}</div>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-primary mt-3">Copy URL</a>
+                <a href="#" class="btn btn-primary mt-3 ml-5">QR Code</a>
+                <a href="#" class="btn btn-primary mt-3">Delete</a>
+                <div>N of clicks: {{result[3]}}</div>
+            </div>
+            {% endfor %}
+        </section>
+    </div>
+    
+    {% endif %}
+{% endblock %}
+        
