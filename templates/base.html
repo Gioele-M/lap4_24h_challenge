@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+    <style>
+      body {
+        background: radial-gradient(
+          circle,
+          rgba(238, 174, 202, 1) 0%,
+          rgba(148, 187, 233, 1) 100%
+        );
+      }
+    </style>
+  </head>
+  <body>
+    <section id="contact">
+      <div class="container-lg">
+        <div class="text-center">
+          <h1 class="mt-5">URL Shortener</h1>
+        </div>
+        <div class="row justify-content-center my-5">
+          <div class="col-lg-6">
+            <form>
+              <label for="url-input" class="form-label"></label>
+              <input
+                type="text"
+                class="form-control"
+                id="url-input"
+                placeholder="input url here"
+              />
+            </form>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="card m-5">
+          <div class="card-header text-center font-weight-bold text-uppercase">Results</div>
+          <div class="card-body">
+            <div>
+              <form>
+                <label for="url-input" class="form-label"></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="url-input"
+                  placeholder="Long URL"
+                />
+                <label for="url-input" class="form-label"></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="url-input"
+                  placeholder="Shortened URL"
+                />
+              </form>
+            </div>
+
+            <!-- <h5 class="card-title">Special title treatment</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+            <a href="#" class="btn btn-primary mt-3">Copy URL</a>
+            <a href="#" class="btn btn-primary mt-3 ml-5">QR Code</a>
+            <a href="#" class="btn btn-primary mt-3">Delete</a>
+          </div>
+        </div>
+      </section>
+    </section>
+ 
+  </body>
+</html>
