@@ -5,7 +5,7 @@ import sqlite3
 database = 'database.db'
 
 
-print('opened db')
+# print('opened db')
 
 # conn.execute('CREATE TABLE links (long TEXT, short TEXT, ip TEXT, clicks INT)')
 
@@ -150,8 +150,8 @@ def add_clicked_to_link(short):
 
 
 # if __name__ == '__main__':
-    # delete_all_links()
-    # print(get_all_links())
+# delete_all_links()
+# print(get_all_links())
     # print(check_short_exists('shortest2'))
     # print(check_short_exists('notexisting'))
 

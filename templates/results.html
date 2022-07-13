@@ -3,10 +3,8 @@
 {% block content %}
     <div class="card m-5">
         
-
-
-        {% if user_specific_links.length == 0 %}
-        <div id="no-links"class="card m-3" style="width: 18rem;">
+        {% if user_specific_links|length == 0 %}
+        <div id="no-links"class="card-header text-center font-weight-bold text-uppercase" >
             <div class="card-body">
               <p class="card-text">You have no links yet, shorten your first url!</p>
             </div>
@@ -84,7 +82,7 @@
         };
 
         function deleteThis(value){
-            fetch(`https://shortboi.herokuapp.com/${value}`, {
+            fetch(`http://127.0.0.1:5000/${value}`, {
                 method: 'DELETE'
             }).then(() => {
                 location.reload();
