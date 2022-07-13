@@ -59,7 +59,10 @@ def get_long_link(short):
         cur = conn.cursor()
         cur.execute(f'SELECT * FROM links WHERE short = "{short}";')
         rows = cur.fetchall()
-        return rows[0]
+        if len(rows) < 1:
+            return False
+        else:
+            return rows[0][0]
     except:
         conn.rollback()
         raise Exception(f'Error in getting link for {short}')
@@ -146,8 +149,9 @@ def add_clicked_to_link(short):
     
 
 
-print(get_all_links())
-# print(check_short_exists('shortest2'))
-# print(check_short_exists('notexisting'))
+if __name__ == '__main__':
+    print(get_all_links())
+    # print(check_short_exists('shortest2'))
+    # print(check_short_exists('notexisting'))
 
 
