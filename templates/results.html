@@ -82,7 +82,7 @@
         };
 
         function deleteThis(value){
-            fetch(`http://127.0.0.1:5000/${value}`, {
+            fetch(`https://shortboi.herokuapp.com/${value}`, {
                 method: 'DELETE'
             }).then(() => {
                 location.reload();
@@ -92,12 +92,16 @@
         function copyThis(value){
             const text = `https://shortboi.herokuapp.com/${value}`
             navigator.clipboard.writeText(text).then(function() {
-                console.log('Async: Copying to clipboard was successful!');
+                // console.log('Async: Copying to clipboard was successful!');
             }, function(err) {
                 console.error('Async: Could not copy text: ', err);
             });
 
         }
+
+        if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+        }   
 
       </script>
 {% endblock %}
