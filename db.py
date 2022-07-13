@@ -149,9 +149,9 @@ def add_clicked_to_link(short):
     
 
 
-if __name__ == '__main__':
-    delete_all_links()
-    print(get_all_links())
+# if __name__ == '__main__':
+    # delete_all_links()
+    # print(get_all_links())
     # print(check_short_exists('shortest2'))
     # print(check_short_exists('notexisting'))
 
