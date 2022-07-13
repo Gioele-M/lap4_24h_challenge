@@ -36,11 +36,15 @@
                         >https://shortboi.herokuapp.com/{{result[1]}}</div>
                     </div>
                 </div>
-                <a href="#" class="btn btn-primary mt-3">Copy URL</a>
+                <button type="button" class="btn btn-primary mt-3 ml-5" onclick="copyThis('{{result[1]}}')">
+                    Copy URL
+                </button>                
                 <button type="button" class="btn btn-primary mt-3 ml-5" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="generateQRCode('{{result[1]}}')">
                     QR Code
-                  </button>
-                <a href="#" class="btn btn-primary mt-3">Delete</a>
+                </button>
+                <button type="button" class="btn btn-primary mt-3 ml-5" onclick="deleteThis('{{result[1]}}')">
+                Delete
+                </button>
                 <div>N of clicks: {{result[3]}}</div>
             </div>
             {% endfor %}
@@ -77,7 +81,26 @@
                     })
                 }
             )
+        };
+
+        function deleteThis(value){
+            fetch(`https://shortboi.herokuapp.com/${value}`, {
+                method: 'DELETE'
+            }).then(() => {
+                location.reload();
+            })
+        };
+
+        function copyThis(value){
+            const text = `https://shortboi.herokuapp.com/${value}`
+            navigator.clipboard.writeText(text).then(function() {
+                console.log('Async: Copying to clipboard was successful!');
+            }, function(err) {
+                console.error('Async: Could not copy text: ', err);
+            });
+
         }
+
       </script>
 {% endblock %}
         
