@@ -6,7 +6,11 @@
 
 
         {% if user_specific_links.length == 0 %}
-        <div>Insert your first link!</div>
+        <div id="no-links"class="card m-3" style="width: 18rem;">
+            <div class="card-body">
+              <p class="card-text">You have no links yet, shorten your first url!</p>
+            </div>
+          </div>
         {% else %}
 
         <section id="result-section">
@@ -33,14 +37,47 @@
                     </div>
                 </div>
                 <a href="#" class="btn btn-primary mt-3">Copy URL</a>
-                <a href="#" class="btn btn-primary mt-3 ml-5">QR Code</a>
+                <button type="button" class="btn btn-primary mt-3 ml-5" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="generateQRCode('{{result[1]}}')">
+                    QR Code
+                  </button>
                 <a href="#" class="btn btn-primary mt-3">Delete</a>
                 <div>N of clicks: {{result[3]}}</div>
             </div>
             {% endfor %}
+
+              <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">QR Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img id='qrcode'/>
+                    </div>
+                
+                </div>
+                </div>
+            </div>
         </section>
     </div>
     
     {% endif %}
+    <script>
+        console.log('I work')
+        function generateQRCode(value){
+            fetch(`http://localhost:5000/generateQRCode/${value}`).then(
+                (res) => {
+                    res.body.getReader().read().then((img) => {
+                        let imageByteArray = img.value;
+                        let stringValue = String.fromCharCode(...imageByteArray);
+                        let encodedValue = btoa(stringValue);
+                        document.getElementById('qrcode').src= `data:image/png;base64,${encodedValue}`;
+                    })
+                }
+            )
+        }
+      </script>
 {% endblock %}
         

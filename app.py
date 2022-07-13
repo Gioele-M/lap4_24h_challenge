@@ -29,7 +29,7 @@ def generate_short_url():
 @app.route('/generateQRCode/<url>', methods=['GET'])
 def generate_qrcode(url):
     buffer = BytesIO()
-    img = qrcode.make(url)
+    img = qrcode.make(f'https://shortboi.herokuapp.com/{url}')
     img.save(buffer)
     buffer.seek(0)
 
