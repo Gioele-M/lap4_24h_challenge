@@ -2,10 +2,10 @@
 
 # ShortBoi
 
-## Information 
+## Information
 ShortBoi is a URL shortener tool. The app takes any URL and generates a unique (and much shorter) redirecting URL for you to use! The app also generates unique QR codes tor easier link sharing! Are you wondering if you have to register? No chance your URLs are associated to your IP address and only you can manage them, while everyone can access them! 
 
-*Create your first link!*
+*Create your first link!* 
 https://shortboi.herokuapp.com/
 
 
