@@ -67,7 +67,7 @@
     <script>
         console.log('I work')
         function generateQRCode(value){
-            fetch(`http://localhost:5000/generateQRCode/${value}`).then(
+            fetch(`https://shortboi.herokuapp.com/generateQRCode/${value}`).then(
                 (res) => {
                     res.body.getReader().read().then((img) => {
                         let imageByteArray = img.value;
